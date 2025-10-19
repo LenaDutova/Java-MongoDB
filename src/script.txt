@@ -1,0 +1,40 @@
+// Docker (командная строка (cmd) операционной системы):
+// 0. Создайте Docker-контейнер с последней версией нереляционной базы данных MongoDB
+docker run -d --name mongolabs -p 27017:27017 mongo:latest
+
+
+// MongoDB Compass (терминал MongoSH):
+// 1. Переключитесь на вашу персональную базу данных digital_library_fio
+use digital_library;
+
+// 2. Вставьте этот массив документов в коллекцию books_fio
+db.books.insertMany([
+  { title: "Мастер и Маргарита", author: "Михаил Булгаков", genre: "Роман", publish_year: 1967, pages: 480, tags: ["мистика", "сатира"] },
+  { title: "Преступление и наказание", author: "Федор Достоевский", genre: "Роман", publish_year: 1866, pages: 671, tags: ["классика", "психология"] },
+  { title: "Собачье сердце", author: "Михаил Булгаков", genre: "Повесть", publish_year: 1925, pages: 112, tags: ["фантастика", "сатира"] },
+  { title: "Мертвые души", author: "Николай Гоголь", genre: "Поэма", publish_year: 1842, pages: 352, tags: ["классика", "сатира"] },
+  { title: "Отцы и дети", author: "Иван Тургенев", genre: "Роман", publish_year: 1862, pages: 208, tags: ["классика", "реализм"] },
+  { title: "Война и мир", author: "Лев Толстой", genre: "Роман-эпопея", publish_year: 1869, pages: 1300, tags: ["история", "классика"] },
+  { title: "Герой нашего времени", author: "Михаил Лермонтов", genre: "Роман", publish_year: 1840, pages: 224, tags: ["классика", "психология"] }
+]);
+
+
+// Java
+// 3. Подключите драйвер в pom.xml, если проект создан со сборщиком Maven, и обновите проект
+<dependencies>
+    <dependency>
+        <groupId>org.mongodb</groupId>
+            <artifactId>mongodb-driver-sync</artifactId>
+        <version>5.6.1</version>
+    </dependency>
+</dependencies>
+
+// 4. Также можно подключить библиотеку логирования
+<dependencies>
+    ...
+    <dependency>
+        <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+        <version>2.0.12</version> <!-- Use a compatible version -->
+    </dependency>
+</dependencies>
