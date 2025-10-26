@@ -1,12 +1,12 @@
 import com.mongodb.client.*;
-import com.mongodb.client.model.Filters;
-import com.mongodb.client.model.Updates;
+import com.mongodb.client.model.*;
 import com.mongodb.client.result.*;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * File - Project Structure - Libraries
@@ -38,9 +38,10 @@ public class LibraryConnector {
             // TODO
 //            findSamples(collection);
 //            updateSamples(collection);
+            agregationsSamle(collection);
 
             // FIXME
-            refresh(collection);
+//            refresh(collection);
         }
     }
 
@@ -101,6 +102,38 @@ public class LibraryConnector {
     }
 
     // endregion
+
+
+    // region // Создание, обновление и удаление книг в коллекции
+
+    private static void agregationsSamle (MongoCollection<Document> collection){
+        System.out.println("--- Рейтинг авторов по среднему объему романов ---");
+
+        // Отфильтровать только романы
+        Bson matchStage = Aggregates.match(Filters.eq("genre", "Роман"));
+
+        // Сгруппировать по автору и вычислить среднее количество страниц
+        Bson groupStage = Aggregates.group(
+                "$author",
+                Accumulators.avg("average_pages", "$pages"));
+
+        // Отсортировать по убыванию среднего количества страниц
+        Bson sortStage = Aggregates.sort(Sorts.descending("average_pages"));
+
+        // Собираем конвейер
+        List<Bson> pipeline = Arrays.asList(matchStage, groupStage, sortStage);
+
+        // Выполняем агрегацию
+        AggregateIterable<Document> results = collection.aggregate(pipeline);
+
+        // Выводим результаты
+        for (Document doc : results) {
+            System.out.println(doc.toJson());
+        }
+    }
+
+    // endregion
+
 
     // region // Создание, обновление и удаление книг в коллекции
 
