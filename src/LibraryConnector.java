@@ -38,7 +38,7 @@ public class LibraryConnector {
             // TODO
 //            findSamples(collection);
 //            updateSamples(collection);
-            agregationsSamle(collection);
+            agregationsSamples(collection);
 
             // FIXME
 //            refresh(collection);
@@ -106,7 +106,7 @@ public class LibraryConnector {
 
     // region // Создание, обновление и удаление книг в коллекции
 
-    private static void agregationsSamle (MongoCollection<Document> collection){
+    private static void agregationsSamples(MongoCollection<Document> collection){
         System.out.println("--- Рейтинг авторов по среднему объему романов ---");
 
         // Отфильтровать только романы
